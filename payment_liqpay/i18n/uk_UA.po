@@ -64,5 +64,4 @@ msgstr "Оплата банком-екваєром"
 #. module: payment_liqpay
 #: model:payment.acquirer,pre_msg:payment_liqpay.payment_acquirer_liqpay
 msgid "You will be redirected to the liqpay website after clicking on the payment button."
-msgstr "You will be redirected to the liqpay website after clicking on the payment button."
-
+msgstr "Вас буде перенаправлено на сайт LiqPay після натисання кнопки Оплатити зараз."
