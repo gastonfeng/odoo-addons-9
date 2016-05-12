@@ -5,7 +5,7 @@
     'category': 'Hidden',
     'summary': 'Payment Acquirer: LiqPay Split Rules',
     'version': '1.1',
-    'author': 'Bohdan Lisnenko',
+    'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
     'description': """LiqPay Payment Acquirer Split Rules.
 Payment will be split across couple receivers.""",

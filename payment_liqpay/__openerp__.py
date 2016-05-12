@@ -5,7 +5,7 @@
     'category': 'Hidden',
     'summary': 'Payment Acquirer: LiqPay Implementation',
     'version': '1.1',
-    'author': "Bohdan Lisnenko",
+    'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'description': """LiqPay Payment Acquirer""",
     'depends': ['payment', 'website_sale'],

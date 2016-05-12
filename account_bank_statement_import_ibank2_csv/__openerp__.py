@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Account Bank Statement Import',
-    'author': 'Bohdan Lisnenko',
+    'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
     'summary': u"Імпорт виписки у форматі iBank2 csv",
     'category': 'Accounting & Finance',

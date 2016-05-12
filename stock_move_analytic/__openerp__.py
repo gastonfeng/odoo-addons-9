@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Move Analytic',
-    'author': 'Bohdan Lisnenko',
+    'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
     'category': 'Inventory Management',
     'depends': ['stock', 'stock_account'],
