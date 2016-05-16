@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': u"Ukraine - Accounting",
+    'name': u"Ukraine - Accounting IFRS",
     'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'summary': u"Український бухоблік згідно МСФЗ",
