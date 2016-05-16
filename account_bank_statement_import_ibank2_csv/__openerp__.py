@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Account Bank Statement Import',
+    'name': 'Account Bank Statement Import iBank2',
     'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
     'summary': u"Імпорт виписки у форматі iBank2 csv",
