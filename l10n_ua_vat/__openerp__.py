@@ -14,7 +14,6 @@
     'version': '1.0',
     'depends': ['account',
                 'account_accountant',
-                'l10n_ua'
                 ],
     'data': [
         'templates/templates.xml',
