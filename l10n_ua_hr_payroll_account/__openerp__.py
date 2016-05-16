@@ -4,7 +4,7 @@
     'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'category': 'Localization',
-    'depends': ['l10n_ua_hr_payroll', 'hr_payroll_account', 'l10n_ua'],
+    'depends': ['l10n_ua_hr_payroll', 'hr_payroll_account', 'l10n_ua_ifrs'],
     'version': '1.1',
     'description': """
 Бухгалтерські проведення для зарплати (МСФЗ)
