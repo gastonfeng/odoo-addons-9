@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Накладна"
+            id="action_report_nakladna"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="l10n_ua_stock_reports.report_nakladna"
+            file="l10n_ua_stock_reports.report_nakladna"
+        />
+    </data>
+</odoo>
