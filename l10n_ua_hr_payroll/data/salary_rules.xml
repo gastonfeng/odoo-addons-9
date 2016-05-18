@@ -50,7 +50,6 @@
         </record>
         <record id="ua_contrib_register_naruky" model="hr.contribution.register">
             <field name="name">До виплати на руки</field>
-            <field name="partner_id" ref="res_partner_esv"/>
         </record>
         <!-- info,  seq 1 - 19 -->
         <record id="hr_payroll_rules_ua_temp_oklad" model="hr.salary.rule">
