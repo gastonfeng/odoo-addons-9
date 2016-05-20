@@ -28,6 +28,7 @@ class TIPayMeth(models.Model):
 
 class TaxInvoice(models.Model):
     _name = 'account.taxinvoice'
+    _inherit = ['mail.thread']
     _description = 'Tax Invoice'
 
     state = fields.Selection([
@@ -43,18 +44,7 @@ class TaxInvoice(models.Model):
                              default='draft',
                              track_visibility='onchange',
                              copy=False,
-                             help=" * The 'Draft' status is used when a user "
-                             "is encoding a new and unconfirmed Invoice.\n"
-                             " * The 'Pro-forma' status is used the invoice "
-                             "does not have an invoice number.\n"
-                             " * The 'Open' status is used when user create "
-                             "invoice, an invoice number is generated. Its in "
-                             "open status till user does not pay invoice.\n"
-                             " * The 'Paid' status is set automatically when "
-                             "the invoice is paid. Its related journal "
-                             "entries may or may not be reconciled.\n"
-                             " * The 'Cancelled' status is used when user "
-                             "cancel invoice.")
+                             )
 
     h01 = fields.Boolean(string=u"Складається інвестором",
                          default=False,
@@ -382,10 +372,12 @@ class TaxInvoice(models.Model):
     amount_tax = fields.Monetary(string=u"Податок",
                                  store=True,
                                  readonly=True,
+                                 track_visibility='always',
                                  compute='_compute_amount')
     amount_total = fields.Monetary(string=u"Всього",
                                    store=True,
                                    readonly=True,
+                                   track_visibility='always',
                                    compute='_compute_amount')
     amount_tara = fields.Monetary(string=u"Зворотна тара",
                                   readonly=True,
@@ -479,23 +471,17 @@ class TaxInvoice(models.Model):
         self.amount_total += self.amount_tara
 
     @api.multi
-    def get_number(self):
+    def action_ready(self):
         for tinv in self:
             if tinv.category == 'out_tax_invoice':
+                if not tinv.taxinvoice_line_ids:
+                    raise UserError(_(u"Немає жодного рядка в документі!"))
                 if not tinv.number:
                     tinv.number = \
                         self.env['ir.sequence'].next_by_code('out.taxinvoice')
             if tinv.category == 'in_tax_invoice':
                 if not tinv.number:
                     raise UserError(_(u"Вкажіть номер податкової накладної"))
-        return
-
-    @api.multi
-    def action_ready(self):
-        for tinv in self:
-            if tinv.category == 'out_tax_invoice':
-                if not tinv.taxinvoice_line_ids:
-                    raise UserError(_(u"Немає жодного рядка в документі!"))
         return self.write({'state': 'ready'})
 
     @api.multi

@@ -11,7 +11,7 @@
     'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'category': 'Localization/Account Charts',
-    'version': '1.0',
+    'version': '1.1',
     'depends': ['account',
                 'account_accountant',
                 ],

@@ -36,7 +36,7 @@ class TaxInvoiceExport(models.TransientModel):
         #     record.signal_workflow('invoice_open')
         data = base64.encodestring(mf.getvalue())
         mf.close()
-        name = "your_PNs.zip"
+        name = "PNs.zip"
         self.write({'state': 'download', 'fdata': data, 'fname': name})
         return {
             'res_id': self.id,
