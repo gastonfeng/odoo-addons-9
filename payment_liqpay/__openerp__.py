@@ -2,7 +2,7 @@
 
 {
     'name': 'LiqPay Payment Acquirer',
-    'category': 'Hidden',
+    'category': 'Website',
     'summary': 'Payment Acquirer: LiqPay Implementation',
     'version': '1.1',
     'author': "ERP Ukraine",
