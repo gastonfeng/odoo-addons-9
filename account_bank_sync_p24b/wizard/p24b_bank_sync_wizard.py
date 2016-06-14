@@ -357,7 +357,7 @@ class P24BBankSync(models.TransientModel):
                                        filtered_st_lines]
                 statement_ids.append(BankStatement.create(st_vals).id)
         if len(statement_ids) == 0:
-            raise UserError(_('You have already imported that file.'))
+            pass
 
         # Prepare import feedback
         notifications = []
@@ -449,6 +449,9 @@ class P24BBankSync(models.TransientModel):
             st_account)
         # Create the bank statements
         statement_ids, notifications = self._create_bank_statements(stmts_vals)
+
+        if len(statement_ids) == 0:
+            return True
         # Now that the import worked out,
         # set it as the bank_statements_source of the journal
         self.journal_id.bank_statements_source = 'p24b_import'
@@ -464,6 +467,27 @@ class P24BBankSync(models.TransientModel):
             'type': 'ir.actions.client',
         }
 
+    def _get_statement_stdate(self):
+        # today in datetime
+        today = fields.Date.from_string(fields.Date.today())
+        # default is beggining of the year
+        stdate = today.strftime('01.01.%Y')
+        domain = [
+            '&',
+            ('journal_id', '=', self.journal_id.id),
+            ('date', '<=', fields.Date.today())]
+        stmts = self.env['account.bank.statement'].search(domain)
+        if len(stmts) > 0:
+            # find latest statement and check if it not in future
+            # return last statement date or today
+            stmts = stmts.sorted(key=lambda r: r.date, reverse=True)
+            last_stmt = stmts[0]
+            last_stmt_date = fields.Date.from_string(last_stmt.date)
+            return last_stmt_date.strftime('%d.%m.%Y')
+        else:
+            # if nothing found
+            return stdate
+
     def _do_statement_import(self):
         wiz_form_act = {
             'res_id': self.id,
@@ -474,9 +498,12 @@ class P24BBankSync(models.TransientModel):
             'target': 'new',
         }
         # TODO: guess dates automatically
+        stdate = self._get_statement_stdate()
+        endate = fields.Date.from_string(
+                fields.Date.today()).strftime('%d.%m.%Y')
         par = {
-            'stdate': '01.05.2016',
-            'endate': '30.05.2016',
+            'stdate': stdate,     # '01.05.2016'
+            'endate': endate,
             'acc': self.bank_acc,
             # 'showInf': ''
         }

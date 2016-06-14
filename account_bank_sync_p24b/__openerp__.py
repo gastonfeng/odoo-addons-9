@@ -13,6 +13,9 @@
 """,
     'auto_install': False,
     'demo': [],
-    'data': ['wizard/p24b_bank_sync_wizard_view.xml'],
+    'data': [
+        'wizard/p24b_bank_sync_wizard_view.xml',
+        'views/account_journal_view.xml'
+    ],
     'installable': True
 }
