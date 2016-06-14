@@ -7,8 +7,6 @@ from openerp.exceptions import UserError
 from openerp.exceptions import RedirectWarning, UserError
 from openerp.addons.base.res.res_bank import sanitize_account_number
 
-import privat24business as p24b
-
 import requests
 import json
 import xml.etree.ElementTree as ET
