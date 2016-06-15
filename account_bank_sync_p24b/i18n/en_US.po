@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 18:02+0000\n"
-"PO-Revision-Date: 2016-06-14 18:02+0000\n"
+"POT-Creation-Date: 2016-06-15 10:33+0000\n"
+"PO-Revision-Date: 2016-06-15 10:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -195,6 +195,12 @@ msgid "Privat24 Sync"
 msgstr "Privat24 Sync"
 
 #. module: account_bank_sync_p24b
+#: code:addons/account_bank_sync_p24b/models/account_journal.py:13
+#, python-format
+msgid "Privat24Business Import"
+msgstr "Privat24Business Import"
+
+#. module: account_bank_sync_p24b
 #: model:ir.model,name:account_bank_sync_p24b.model_account_p24b_sync_phone_sel
 msgid "Privat24Business phone list"
 msgstr "Privat24Business phone list"
@@ -205,7 +211,7 @@ msgid "PrivatBank Online Sync"
 msgstr "PrivatBank Online Sync"
 
 #. module: account_bank_sync_p24b
-#: code:addons/account_bank_sync_p24b/models/account_journal.py:21
+#: code:addons/account_bank_sync_p24b/models/account_journal.py:22
 #, python-format
 msgid "Provide account number on bank journal!"
 msgstr "Provide account number on bank journal!"

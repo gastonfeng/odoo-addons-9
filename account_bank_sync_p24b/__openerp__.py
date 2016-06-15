@@ -3,13 +3,13 @@
     'name': 'PrivatBank online synchronization',
     'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
-    'summary': u"Онлайн синхронізація з ПриватБанком",
+    'summary': u"Sync statements with PrivatBank online",
     'category': 'Accounting & Finance',
     'depends': ['account'],
     'version': '1.0',
     'description': """
-Цей додаток дозволяє синхронізувати виписку та платежі
-з ПриватБанком у режимі онлайн.
+This app enables online synchronization of
+bank statement and payments with PrivatBank.
 """,
     'auto_install': False,
     'demo': [],
