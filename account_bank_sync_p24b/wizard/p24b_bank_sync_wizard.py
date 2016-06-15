@@ -467,8 +467,10 @@ class P24BBankSync(models.TransientModel):
                 # does not exist, create one
                 bal_st, bal_end = self._get_balance_end(
                                             dt_date.strftime('%d.%m.%Y'))
+                name = self.journal_id.sequence_id.with_context(
+                    ir_sequence_date=date_str).next_by_id()
                 st_data.append({
-                    'name': dt_date.strftime('%d.%m.%Y') + '/' + st_account,
+                    'name': name,
                     'date': date_str,
                     'balance_start': bal_st,
                     'balance_end_real': bal_end,
