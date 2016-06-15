@@ -4,7 +4,6 @@ import base64
 
 from openerp import api, fields, models, _
 from openerp.exceptions import UserError
-from openerp.exceptions import RedirectWarning, UserError
 from openerp.addons.base.res.res_bank import sanitize_account_number
 
 import requests
@@ -37,6 +36,7 @@ class P24BBankSync(models.TransientModel):
 
     P24_URL = 'https://link.privatbank.ua/api/p24b/'
     P24_STATEMENTS_URL = P24_URL + 'statements'
+    P24_RESTS_URL = P24_URL + 'rests'
 
     # Reusable session
     s = requests.Session()
@@ -382,6 +382,48 @@ class P24BBankSync(models.TransientModel):
             }]
         return statement_ids, notifications
 
+    def _get_balance_end(self, day_date):
+        par = {
+            'stdate': day_date,
+            'endate': day_date,
+            'in_time': 'd',
+            'acc': self.bank_acc,
+        }
+        # _logger.info('statement perid: %s to %s' % (stdate, endate))
+        try:
+            self.r = self.s.get(self.P24_RESTS_URL,
+                                params=par,
+                                headers={'Accept': 'application/xpath'},
+                                timeout=self.timeout)
+        except:
+            return None, None
+        if self.r.status_code == 200:
+            # OK
+            xml_data = self.r.text.encode('utf8')
+            # parse rests
+            try:
+                root = ET.fromstring(xml_data)
+            except ET.ParseError:
+                _logger.warning('Unable to parse xml rests')
+                return None, None
+
+            if root.tag.lower() != 'rests':
+                _logger.warning('wrong xml rests format')
+                return None, None
+            try:
+                bal_st = root.find('turn').find('inrest').text
+                bal_end = root.find('turn').find('outrest').text
+                if bal_st and bal_end:
+                    return float(bal_st), float(bal_end)
+                else:
+                    return None, None
+            except:
+                return None, None
+        else:
+            _logger.warning('Unable to query xml rests')
+            return None, None
+        return None, None
+
     def _import_statement_data(self, xmldata):
         wiz_form_act = {
             'res_id': self.id,
@@ -423,9 +465,13 @@ class P24BBankSync(models.TransientModel):
 
             if not any(d.get('date', None) == date_str for d in st_data):
                 # does not exist, create one
+                bal_st, bal_end = self._get_balance_end(
+                                            dt_date.strftime('%d.%m.%Y'))
                 st_data.append({
                     'name': dt_date.strftime('%d.%m.%Y') + '/' + st_account,
                     'date': date_str,
+                    'balance_start': bal_st,
+                    'balance_end_real': bal_end,
                     'transactions': [],
                 })
             for d in st_data:
@@ -497,16 +543,17 @@ class P24BBankSync(models.TransientModel):
             'view_type': 'form',
             'target': 'new',
         }
-        # TODO: guess dates automatically
+
         stdate = self._get_statement_stdate()
         endate = fields.Date.from_string(
                 fields.Date.today()).strftime('%d.%m.%Y')
         par = {
-            'stdate': stdate,     # '01.05.2016'
+            'stdate': stdate,
             'endate': endate,
             'acc': self.bank_acc,
             # 'showInf': ''
         }
+        _logger.info('statement perid: %s to %s' % (stdate, endate))
         self.r = self.s.get(self.P24_STATEMENTS_URL,
                             params=par,
                             headers={'Accept': 'application/xpath'},

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 
 import base64
 
@@ -9,7 +10,7 @@ class P24AccountJournal(models.Model):
     _inherit = "account.journal"
 
     bank_statements_source = fields.Selection(
-        selection_add=[('p24b_import', 'Privat24Business Import')])
+        selection_add=[('p24b_import', _('Privat24Business Import'))])
     p24_login = fields.Char(string='Privat24 Login')
     p24_passwd = fields.Char(string='Privat24 Password')
 
@@ -48,11 +49,13 @@ class P24AccountJournal(models.Model):
     @api.model
     def create(self, vals):
         if 'p24_login' in vals:
-            # encode field
-            vals['p24_login'] = base64.b64encode(vals['p24_login'])
+            if vals['p24_login']:
+                # encode field
+                vals['p24_login'] = base64.b64encode(vals['p24_login'])
         if 'p24_passwd' in vals:
-            # encode field
-            vals['p24_passwd'] = base64.b64encode(vals['p24_passwd'])
+            if vals['p24_passwd']:
+                # encode field
+                vals['p24_passwd'] = base64.b64encode(vals['p24_passwd'])
         return super(P24AccountJournal, self).create(vals)
 
     @api.multi

@@ -7,8 +7,11 @@
             <field name="inherit_id" ref="account.view_account_journal_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='display_on_footer']" position="after">
-                    <field name="p24_login"/>
-                    <field name="p24_passwd" password="True"/>
+                    <field name="p24_login"
+                        attrs="{'invisible': [('bank_statements_source', '!=', 'p24b_import')]}"/>
+                    <field name="p24_passwd"
+                        password="True"
+                        attrs="{'invisible': [('bank_statements_source', '!=', 'p24b_import')]}"/>
                 </xpath>
             </field>
         </record>
