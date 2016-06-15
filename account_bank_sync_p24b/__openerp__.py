@@ -13,6 +13,7 @@ bank statement and payments with PrivatBank.
 """,
     'auto_install': False,
     'demo': [],
+    'depends': ['account'],
     'data': [
         'wizard/p24b_bank_sync_wizard_view.xml',
         'views/account_journal_view.xml'
