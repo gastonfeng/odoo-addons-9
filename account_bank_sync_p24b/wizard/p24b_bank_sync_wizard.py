@@ -37,6 +37,7 @@ class P24BBankSync(models.TransientModel):
     P24_URL = 'https://link.privatbank.ua/api/p24b/'
     P24_STATEMENTS_URL = P24_URL + 'statements'
     P24_RESTS_URL = P24_URL + 'rests'
+    P24_NEWPAYMENT_URL = P24_URL + 'nbu_payment_new'
 
     # Reusable session
     s = requests.Session()
@@ -275,6 +276,12 @@ class P24BBankSync(models.TransientModel):
         ondelete='cascade',
         states={'phone_sel': [('required', True)]})
     numb_of_tries = 2
+    # Payment export
+    partner_id = fields.Many2one('res.partner', string='Partner')
+    memo = fields.Char(string='Memo')
+    currency_id = fields.Many2one('res.currency', string='Currency')
+    amount = fields.Monetary(string='Payment Amount')
+    payment_date = fields.Date(string='Payment Date')
 
     # task == 'statement_import' specific fields
     bank_acc = fields.Char(
@@ -536,6 +543,46 @@ class P24BBankSync(models.TransientModel):
             # if nothing found
             return stdate
 
+    def _do_send_payment(self):
+        wiz_form_act = {
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.p24b.sync',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'new',
+        }
+        bank = self.partner_id.bank_ids[0]
+        pay_date = fields.Date.from_string(
+            self.payment_date).strftime('%d.%m.%Y')
+        data = {
+            'A_ACC': self.bank_acc,
+            'amt': self.amount,
+            'B_ACC': bank.acc_number,
+            'B_BIC': bank.bank_bic,
+            'B_CRF': self.partner_id.company_registry,
+            'B_NAME': self.partner_id.name,
+            'DAT_INP': pay_date,
+            'DAT_VAL': pay_date,
+            'DETAILS': self.memo,
+            'MUR': '',
+            'type': 'cr',
+        }
+        print data
+        # P24_NEWPAYMENT_URL
+        self.r = self.s.post(self.P24_NEWPAYMENT_URL,
+                             data=json.dumps(data),
+                             timeout=self.timeout)
+        if self.r.status_code == 200:
+            # OK
+            self.task = 'nothing'
+            self.state = 'success'
+            return wiz_form_act
+        else:
+            _logger.info('can not send payment. trying to recreate session')
+            self._remove_session()
+            return self.do_sync()
+
     def _do_statement_import(self):
         wiz_form_act = {
             'res_id': self.id,
@@ -579,6 +626,14 @@ class P24BBankSync(models.TransientModel):
         close session and call do_sync to recreate
         session from scratch and call _do_task on success
         '''
+        wiz_form_act = {
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.p24b.sync',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'new',
+        }
         if self.task == 'nothing':
             self.state = 'success'
             return wiz_form_act
@@ -587,6 +642,9 @@ class P24BBankSync(models.TransientModel):
 
         if self.task == 'statement_import':
             return self._do_statement_import()
+
+        if self.task == 'send_payment':
+            return self._do_send_payment()
 
     @api.multi
     def do_sync(self):
