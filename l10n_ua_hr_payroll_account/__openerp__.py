@@ -5,7 +5,9 @@
     'website': "https://erp.co.ua",
     'category': 'Localization',
     'depends': ['l10n_ua_hr_payroll', 'hr_payroll_account'],
-    'version': '1.1',
+    'version': '1.2',
+    'price': 100.00,
+    'currency': 'EUR',
     'description': """
 Бухгалтерські проведення для зарплати (МСФЗ)
 ==============================================

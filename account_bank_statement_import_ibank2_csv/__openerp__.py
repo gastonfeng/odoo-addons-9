@@ -6,7 +6,9 @@
     'summary': u"Імпорт виписки у форматі iBank2 csv",
     'category': 'Accounting & Finance',
     'depends': ['account'],
-    'version': '1.0',
+    'version': '1.1',
+    'price': 100.00,
+    'currency': 'EUR',
     'description': """
 Помічник імпорту банківської виписки з файлу
 у форматі iBank2 csv.

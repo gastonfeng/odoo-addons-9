@@ -4,7 +4,9 @@
     'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'summary': u"Український бухоблік згідно МСФЗ",
-    'version': '1.1',
+    'version': '1.2',
+    'price': 100.00,
+    'currency': 'EUR',
     'description': u"""
 Бухгалтерський облік для України (МСФЗ)
 =======================================
