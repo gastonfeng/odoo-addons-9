@@ -5,7 +5,9 @@
     'website': "https://erp.co.ua",
     'category': 'Localization',
     'depends': ['hr_payroll', 'hr_holidays'],
-    'version': '1.1',
+    'version': '1.2',
+    'price': 100.00,
+    'currency': 'EUR',
     'description': """
 Заробітна плата для України.
 =============================
