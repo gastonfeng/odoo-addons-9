@@ -11,7 +11,7 @@
     'author': "ERP Ukraine",
     'website': "https://erp.co.ua",
     'category': 'Localization/Account Charts',
-    'version': '1.2',
+    'version': '1.3',
     'price': 200.00,
     'currency': 'EUR',
     'depends': ['account',
