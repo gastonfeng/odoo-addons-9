@@ -38,7 +38,10 @@ class TaxInvoiceImport(models.TransientModel):
             raise UserError(_(u"Невірний формат файлу"))
             return True
         c_doc = declarhead.find('C_DOC')
-        if c_doc is None or c_doc.text != 'J12':
+        if c_doc is None:
+            raise UserError(_(u"Невірна версія формату xml"))
+            return True
+        if c_doc.text != 'J12' or c_doc.text != 'F12':
             raise UserError(_(u"Невірна версія формату xml"))
             return True
         c_doc_sub = declarhead.find('C_DOC_SUB')
