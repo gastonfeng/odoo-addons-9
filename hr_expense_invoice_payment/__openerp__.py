@@ -8,7 +8,7 @@
     'website': 'http://erp.co.ua',
     'description': """
 Pay Supplier invoice with HR expenses.
-"""
+""",
     'depends': [
         'hr_expense',
     ],
