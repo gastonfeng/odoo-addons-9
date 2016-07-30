@@ -87,10 +87,10 @@ class HrExpenseExpense(models.Model):
                 move_lines = expense.account_move_id.line_ids
                 c_move_lines = move_lines.filtered(
                     lambda x: x.partner_id == partner and
-                    x.debit == abs(round(expense.invoice.residual, 2)))
+                    abs(round(x.debit, 2)) == abs(round(expense.invoice.residual, 2)))
                 c_move_lines |= expense.invoice.move_id.line_ids.filtered(
                     lambda x: x.account_id == expense.invoice.account_id and
-                    x.credit == abs(round(expense.invoice.residual, 2)))
+                    abs(round(x.credit, 2)) == abs(round(expense.invoice.residual, 2)))
                 if len(c_move_lines) != 2:
                     raise exceptions.Warning(
                         _('Cannot reconcile supplier invoice payable with '
