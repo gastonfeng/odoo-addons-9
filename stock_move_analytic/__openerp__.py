@@ -6,8 +6,6 @@
     'category': 'Inventory Management',
     'depends': ['stock', 'stock_account'],
     'version': '1.1',
-    'price': 5.00,
-    'currency': 'EUR',
     'description': """
 Include analytic account in stock accounting entries
 ======================================================
