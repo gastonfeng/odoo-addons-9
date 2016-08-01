@@ -62,7 +62,7 @@ class TaxInvoice(models.Model):
         ('00', u"Немає"),
         ('01', u"01 - "
          u"Складена на суму перевищення звичайної ціни над фактичною"),
-        ('02', u"02 - "
+        ('02', u"02 - " # іпн 10000000000 нава неплатник
          u"Постачання неплатнику податку"),
         ('03', u"03 - "
          u"Постачання товарів/послуг у рахунок оплати праці фізичним особам, "
@@ -812,7 +812,7 @@ class TaxInvoice(models.Model):
         else:
             ET.SubElement(declarbody, 'R04G11').set('xsi:nil', 'true')
         # footer
-        ET.SubElement(declarbody, 'H10G1S').text = self.signer_id.name
+        ET.SubElement(declarbody, 'H10G1S').text = self.signer_id.name #іпн де?
         if self.prych_zv:
             ET.SubElement(declarbody, 'R003G10S').text = self.prych_zv
         else:
