@@ -6,8 +6,6 @@
     'category': 'Inventory Management',
     'depends': ['stock'],
     'version': '1.1',
-    'price': 20.00,
-    'currency': 'EUR',
     'description': """
 Друковані форми для складськго обліку
 =======================================
