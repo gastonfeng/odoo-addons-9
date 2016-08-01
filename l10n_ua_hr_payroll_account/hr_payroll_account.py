@@ -90,7 +90,7 @@ class hr_payslip(osv.osv):
                         'date': date,
                         'debit': amt > 0.0 and amt or 0.0,
                         'credit': amt < 0.0 and -amt or 0.0,
-                        'analytic_account_id':
+                        'analytic_account_id':      # TODO: take from contract
                             (line.salary_rule_id.analytic_account_id and
                                 line.salary_rule_id.analytic_account_id.id or
                                 False),
