@@ -385,7 +385,8 @@ class TaxInvoice(models.Model):
                                   default=0.00)
     invoice_id = fields.Many2one('account.invoice',
                                  readonly=True,
-                                 states={'draft': [('readonly', False)]},
+                                 states={'draft': [('readonly', False)],
+                                         'ready': [('readonly', False)]},
                                  string=u"Рахунок-фактура",
                                  copy=False,
                                  help=u"Пов’язаний рахунок",
