@@ -603,6 +603,10 @@ class TaxInvoice(models.Model):
             raise UserError(_(u"Вкажіть ЄДРПОУ у налаштуваннях компанії."))
         if not self.company_id.vat:
             raise UserError(_(u"Вкажіть ІПН у налаштуваннях компанії."))
+        if not self.signer_id.partner_id.company_registry:
+            raise UserError(_(u"Вкажіть ідентифікаційний код " +
+                            u"відповідальної особи у налаштуваннях" +
+                              u" пов’язаного контрагента"))
 
         date = fields.Date.from_string(self.date_vyp)
         # compose file name
@@ -813,7 +817,9 @@ class TaxInvoice(models.Model):
         else:
             ET.SubElement(declarbody, 'R04G11').set('xsi:nil', 'true')
         # footer
-        ET.SubElement(declarbody, 'H10G1S').text = self.signer_id.name #іпн де?
+        ET.SubElement(declarbody, 'HBOS').text = self.signer_id.name
+        ET.SubElement(declarbody, 'HKBOS').text = \
+            self.signer_id.partner_id.company_registry
         if self.prych_zv:
             ET.SubElement(declarbody, 'R003G10S').text = self.prych_zv
         else:
