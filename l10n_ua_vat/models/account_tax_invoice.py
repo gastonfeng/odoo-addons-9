@@ -62,7 +62,7 @@ class TaxInvoice(models.Model):
         ('00', u"Немає"),
         ('01', u"01 - "
          u"Складена на суму перевищення звичайної ціни над фактичною"),
-        ('02', u"02 - " # іпн 10000000000 нава неплатник
+        ('02', u"02 - "
          u"Постачання неплатнику податку"),
         ('03', u"03 - "
          u"Постачання товарів/послуг у рахунок оплати праці фізичним особам, "
@@ -603,6 +603,10 @@ class TaxInvoice(models.Model):
             raise UserError(_(u"Вкажіть ЄДРПОУ у налаштуваннях компанії."))
         if not self.company_id.vat:
             raise UserError(_(u"Вкажіть ІПН у налаштуваннях компанії."))
+        if not self.signer_id.partner_id.company_registry:
+            raise UserError(_(u"Вкажіть ідентифікаційний код " +
+                            u"відповідальної особи у налаштуваннях" +
+                              u" пов’язаного контрагента"))
 
         date = fields.Date.from_string(self.date_vyp)
         # compose file name
@@ -673,10 +677,16 @@ class TaxInvoice(models.Model):
             else:
                 ET.SubElement(declarbody, 'HFBUY').set('xsi:nil', 'true')
             ET.SubElement(declarbody, 'HNAMESEL').text = self.company_id.name
-            ET.SubElement(declarbody, 'HNAMEBUY').text = \
-                self.partner_id.parent_name or self.partner_id.name
+            if self.htypr == '02':
+                ET.SubElement(declarbody, 'HNAMEBUY').text = u"Неплатник"
+            else:
+                ET.SubElement(declarbody, 'HNAMEBUY').text = \
+                    self.partner_id.parent_name or self.partner_id.name
             ET.SubElement(declarbody, 'HKSEL').text = self.company_id.vat
-            ET.SubElement(declarbody, 'HKBUY').text = self.ipn_partner
+            if self.htypr == '02':
+                ET.SubElement(declarbody, 'HKBUY').text = u"100000000000"
+            else:
+                ET.SubElement(declarbody, 'HKBUY').text = self.ipn_partner
         else:   # in tax invoice
             if self.number2 is not False:
                 ET.SubElement(declarbody, 'HFBUY').text = self.number2
@@ -813,7 +823,9 @@ class TaxInvoice(models.Model):
         else:
             ET.SubElement(declarbody, 'R04G11').set('xsi:nil', 'true')
         # footer
-        ET.SubElement(declarbody, 'H10G1S').text = self.signer_id.name #іпн де?
+        ET.SubElement(declarbody, 'HBOS').text = self.signer_id.name
+        ET.SubElement(declarbody, 'HKBOS').text = \
+            self.signer_id.partner_id.company_registry
         if self.prych_zv:
             ET.SubElement(declarbody, 'R003G10S').text = self.prych_zv
         else:
