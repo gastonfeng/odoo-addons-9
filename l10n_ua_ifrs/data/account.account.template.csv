@@ -50,7 +50,7 @@
 "ua_ias_1301",1301,"Довгострокові кредити","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
 "ua_ias_1302",1302,"Іпотека","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
 "ua_ias_1310",1310,"Відстрочені податкові зобов’язання","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
-"ua_ias_1320",1320,"Доходи майбутніх періодів","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
+"ua_ias_1320",1320,"Витрати майбутніх періодів","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
 "ua_ias_1330",1330,"Інші довгострокові зобов’язання","account.data_account_type_non_current_liabilities",FALSE,"l10n_ua_ias_chart_template"
 "ua_ias_1400",1400,"Статутний капітал","account.data_account_type_equity",FALSE,"l10n_ua_ias_chart_template"
 "ua_ias_1401",1401,"Емісійний фонд","account.data_account_type_equity",FALSE,"l10n_ua_ias_chart_template"
