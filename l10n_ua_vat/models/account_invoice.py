@@ -90,7 +90,7 @@ class VatAccountInvoice(models.Model):
     @api.multi
     def tax_invoice_create(self):
         for inv in self:
-            ipn_partner = inv.partner_id.company_registry
+            ipn_partner = inv.partner_id.vat
             if ipn_partner:
                 if ipn_partner == u"100000000000":
                     horig1 = True
