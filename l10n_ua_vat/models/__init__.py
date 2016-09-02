@@ -5,3 +5,4 @@ import account_spr_sti
 import company
 import product
 import partner
+import account_invoice

@@ -397,7 +397,8 @@ class TaxInvoice(models.Model):
                                            ['in_invoice']}.get( \
                                            category, [])), \
                                            ('company_id', '=', \
-                                           company_id)]")
+                                           company_id), \
+                                           ('partner_id', '=', partner_id)]")
 
     @api.onchange('journal_id')
     def _onchange_journal_id(self):
@@ -462,12 +463,16 @@ class TaxInvoice(models.Model):
     @api.one
     @api.depends('taxinvoice_line_ids.price_subtotal',
                  'tax_line_ids.amount',
+                 'tax_line_ids.base',
                  'currency_id',
                  'company_id',
                  'amount_tara')
     def _compute_amount(self):
-        self.amount_untaxed = sum(line.base for line in self.tax_line_ids)
-        self.amount_tax = sum(line.amount for line in self.tax_line_ids)
+        self.amount_untaxed = 0
+        self.amount_tax = 0
+        for tax_line in self.tax_line_ids:
+            self.amount_untaxed += tax_line.base
+            self.amount_tax += tax_line.amount
         self.amount_total = self.amount_untaxed + self.amount_tax
         self.amount_total += self.amount_tara
 
