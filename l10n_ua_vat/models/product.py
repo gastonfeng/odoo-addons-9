@@ -26,4 +26,3 @@ class ProductUomCode(models.Model):
     uom_code = fields.Char(string=u"Код одиниць виміру",
                            help=u"Код згідно КСПОВО",
                            size=4)
-# TODO Char to integer.  <field name="uom_code" digits="[42, 5]"/>
