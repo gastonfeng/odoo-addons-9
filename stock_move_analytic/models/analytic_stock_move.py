@@ -62,3 +62,89 @@ class ASM_StockQuant(models.Model):
                 move.location_dest_id.valuation_analytic_account_id.id or False
 
         return res
+
+    @api.v7
+    def _account_entry_move(self, cr, uid, quants, move, context=None):
+        res = super(ASM_StockQuant, self)._account_entry_move(
+            cr, uid, quants, move, context=context)
+
+        location_obj = self.pool.get('stock.location')
+        location_from = move.location_id
+        location_to = quants[0].location_id
+        company_from = location_obj._location_owner(
+            cr, uid, location_from, context=context)
+        company_to = location_obj._location_owner(
+            cr, uid, location_to, context=context)
+        # from WH to production
+        if company_from == company_to and move.location_id.usage == 'internal':
+            if move.location_dest_id.usage in ('production', 'inventory'):
+                journal_id, acc_src, acc_dest, acc_valuation = \
+                    self._get_accounting_data_for_valuation(
+                        cr, uid, move, context=ctx)
+                if location_to and location_to.usage in ('production', 'inventory'):
+                    # goods returned
+                    self._create_account_move_line(
+                        cr, uid,
+                        quants, move, acc_valuation, acc_src, journal_id,
+                        context=ctx)
+                else:
+                    # direct move
+                    self._create_account_move_line(
+                        cr, uid,
+                        quants, move, acc_valuation, acc_dest, journal_id,
+                        context=ctx)
+        # from production to WH
+        if company_from == company_to and move.location_dest_id.usage == 'internal':
+            if move.location_id.usage in ('production', 'inventory'):
+                journal_id, acc_src, acc_dest, acc_valuation = \
+                    self._get_accounting_data_for_valuation(
+                        cr, uid, move, context=ctx)
+                if location_from and location_from.usage in ('production', 'inventory'):
+                    # goods returned
+                    self._create_account_move_line(
+                        cr, uid,
+                        quants, move, acc_dest, acc_valuation, journal_id,
+                        context=ctx)
+                else:
+                    # direct move
+                    self._create_account_move_line(
+                        cr, uid,
+                        quants, move, acc_src, acc_valuation, journal_id,
+                        context=ctx)
+
+    @api.v8
+    def _account_entry_move(self, quants, move):
+        res = super(ASM_StockQuant, self)._account_entry_move(
+            quants, move)
+
+        location_obj = self.pool.get('stock.location')
+        location_from = move.location_id
+        location_to = quants[0].location_id
+        company_from = location_obj._location_owner(location_from)
+        company_to = location_obj._location_owner(location_to)
+        # from WH to production
+        if company_from == company_to and move.location_id.usage == 'internal':
+            if move.location_dest_id.usage in ('production', 'inventory'):
+                journal_id, acc_src, acc_dest, acc_valuation = \
+                    self._get_accounting_data_for_valuation(move)
+                if location_to and location_to.usage in ('production', 'inventory'):
+                    # goods returned
+                    self._create_account_move_line(
+                        quants, move, acc_valuation, acc_src, journal_id)
+                else:
+                    # direct move
+                    self._create_account_move_line(
+                        quants, move, acc_valuation, acc_dest, journal_id)
+        # from production to WH
+        if company_from == company_to and move.location_dest_id.usage == 'internal':
+            if move.location_id.usage in ('production', 'inventory'):
+                journal_id, acc_src, acc_dest, acc_valuation = \
+                    self._get_accounting_data_for_valuation(move)
+                if location_from and location_from.usage in ('production', 'inventory'):
+                    # goods returned
+                    self._create_account_move_line(
+                        quants, move, acc_dest, acc_valuation, journal_id)
+                else:
+                    # direct move
+                    self._create_account_move_line(
+                        quants, move, acc_src, acc_valuation, journal_id)
