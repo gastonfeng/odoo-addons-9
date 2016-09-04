@@ -5,7 +5,7 @@
     'website': 'https://erp.co.ua',
     'category': 'Inventory Management',
     'depends': ['stock', 'stock_account'],
-    'version': '1.1',
+    'version': '1.2',
     'description': """
 Include analytic account in stock accounting entries
 ======================================================
