@@ -5,8 +5,8 @@
     'category': 'Hidden',
     'summary': 'Payment Acquirer: LiqPay Split Rules',
     'version': '1.2',
-    'price': 20.00,
-    'currency': 'EUR',
+    # 'price': 20.00,
+    # 'currency': 'EUR',
     'author': 'ERP Ukraine',
     'website': 'https://erp.co.ua',
     'description': """LiqPay Payment Acquirer Split Rules.

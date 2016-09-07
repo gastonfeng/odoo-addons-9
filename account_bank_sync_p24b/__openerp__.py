@@ -7,8 +7,8 @@
     'category': 'Accounting & Finance',
     'depends': ['account'],
     'version': '1.1',
-    'price': 100.00,
-    'currency': 'EUR',
+    # 'price': 100.00,
+    # 'currency': 'EUR',
     'description': """
 This app enables online synchronization of
 bank statement and payments with PrivatBank.

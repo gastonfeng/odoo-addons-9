@@ -6,8 +6,8 @@
     'category': 'Localization/Account Charts',
     'depends': ['account'],
     'version': '1.1',
-    'price': 20.00,
-    'currency': 'EUR',
+    # 'price': 20.00,
+    # 'currency': 'EUR',
     'description': """
 Друковані форми первинних документів для бухгалтера
 ======================================================
