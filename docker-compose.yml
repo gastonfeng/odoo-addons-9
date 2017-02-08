@@ -2,15 +2,17 @@ version: '2'
 services:
   web:
     tty: true
-    image: odoo:9.0
+    image: odoo:10.0
     depends_on:
       - db
     ports:
       - "8069:8069"
     volumes:
-      # - ./.config:/etc/odoo
+    #   - ./.config:/etc/odoo
       - ./:/mnt/extra-addons
-    # command: openerp-server -i pos_analytic  -d pos_analytic9
+    # command: odoo --init=sale,delivery,base,sale_order_dates,sale_stock,sales_team,mrp,sale_mrp --database=ww --without-demo
+    # command: odoo -i sale,delivery,base,sale_order_dates,sale_stock,sales_team,mrp,sale_mrp --stop-after-init -d wwtests --workers=4   # 1st step
+    # command: odoo -i woodwerk --test-enable --stop-after-init -d wwtests --workers=4    # 2nd step
   db:
     image: postgres:9.4
     environment:
