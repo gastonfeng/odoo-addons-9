@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* assign_salesperson_to_customer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0-20161123\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-09 13:47+0000\n"
+"PO-Revision-Date: 2017-02-09 13:47+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.ui.view,arch_db:assign_salesperson_to_customer.assign_salesperson_to_customer_form
+msgid "Cancel"
+msgstr "Отмена"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.actions.act_window,name:assign_salesperson_to_customer.assign_salesperson_to_customer_act
+#: model:ir.actions.act_window,name:assign_salesperson_to_customer.mass_set_user_id_act
+#: model:ir.ui.view,arch_db:assign_salesperson_to_customer.assign_salesperson_to_customer_form
+msgid "Change Salesperson"
+msgstr "Изменить продавца"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_create_uid
+msgid "Created by"
+msgstr "Создал"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_create_date
+msgid "Created on"
+msgstr "Создано"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_display_name
+msgid "Display Name"
+msgstr "Отображаемое имя"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_id
+msgid "ID"
+msgstr "ID"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer___last_update
+msgid "Last Modified on"
+msgstr "Последний раз изменено"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_write_uid
+msgid "Last Updated by"
+msgstr "Последний раз обновил"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_write_date
+msgid "Last Updated on"
+msgstr "Последний раз обновлено"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model.fields,field_description:assign_salesperson_to_customer.field_assign_salesperson_to_customer_user_id
+msgid "Salesperson"
+msgstr "Продавец"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.ui.view,arch_db:assign_salesperson_to_customer.assign_salesperson_to_customer_form
+msgid "Select"
+msgstr "Выбрать"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.model,name:assign_salesperson_to_customer.model_assign_salesperson_to_customer
+msgid "assign_salesperson_to_customer"
+msgstr "assign_salesperson_to_customer"
+
+#. module: assign_salesperson_to_customer
+#: model:ir.ui.view,arch_db:assign_salesperson_to_customer.assign_salesperson_to_customer_form
+msgid "or"
+msgstr "или"
