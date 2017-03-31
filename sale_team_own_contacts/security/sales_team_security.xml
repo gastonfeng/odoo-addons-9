@@ -10,7 +10,7 @@
     <record id="crm_rule_own_contacts" model="ir.rule">
         <field name="name">Own Contacts</field>
         <field ref="base.model_res_partner" name="model_id"/>
-        <field name="domain_force">['|','|',('user_id', '=', user.id),('user_ids', 'in', user.id),('my_company_ids', 'in', user.company_id.id)]</field>
+        <field name="domain_force">['|','|',('user_id', '=', user.id),('user_ids', '!=', False),('my_company_ids', 'in', user.company_id.id)]</field>
         <field name="groups" eval="[(4, ref('sale_team_own_contacts.group_sale_manager_own_contacts'))]"/>
     </record>
 </odoo>
