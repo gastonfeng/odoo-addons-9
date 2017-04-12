@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="mrp_production_form_view_em" model="ir.ui.view">
+            <field name="name">mrp.production.form.em</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="product_qty_on_stock"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="mrp_production_tree_view_em" model="ir.ui.view">
+            <field name="name">mrp.production.tree.em</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="product_qty_on_stock"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
