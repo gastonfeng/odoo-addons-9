@@ -8,7 +8,7 @@
     'support': 'support@erp.co.ua',
     'license': 'AGPL-3',
     'category': 'Sales',
-    'depends': ['mrp'],
+    'depends': ['mrp', 'sale_stock', 'delivery'],
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
