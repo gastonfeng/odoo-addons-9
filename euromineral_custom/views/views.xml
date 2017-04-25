@@ -20,5 +20,44 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_order_form_em" model="ir.ui.view">
+            <field name="name">sale.order.form.em</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="customer_city"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_form_em" model="ir.ui.view">
+            <field name="name">view.picking.form.em</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="customer_city" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_picking_tree_em" model="ir.ui.view">
+            <field name="name">view.picking.tree.em</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="customer_city" readonly="1"/>
+                    <field name="weight" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
