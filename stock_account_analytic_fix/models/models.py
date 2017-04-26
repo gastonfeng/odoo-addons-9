@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 
+
 class AccountInvoiceCOGSFIX(models.Model):
     _inherit = "account.invoice"
 
